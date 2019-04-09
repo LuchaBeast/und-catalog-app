@@ -16,8 +16,15 @@ class Item(Base):
     item_name = Column(String, nullable = False)
     id = Column(Integer, primary_key = True)
     item_description = Column(String)
-    category_id = Column(Integer,ForeignKey('category.id'))
+    category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
+
+class Images(Base):
+    __tablename__ = 'item_image'
+    filename = Column(String, nullable = False)
+    id = Column(Integer, primary_key = True)
+    item_id = Column(Integer, ForeignKey('item.id'))
+    item = relationship(Item)
 
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.create_all(engine)
