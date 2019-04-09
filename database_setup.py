@@ -21,13 +21,5 @@ class Item(Base):
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
 
-# Create item_image table
-class Images(Base):
-    __tablename__ = 'item_image'
-    filename = Column(String, nullable = False)
-    id = Column(Integer, primary_key = True)
-    item_id = Column(Integer, ForeignKey('item.id'))
-    item = relationship(Item)
-
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.create_all(engine)
