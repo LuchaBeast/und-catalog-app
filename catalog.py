@@ -18,9 +18,10 @@ def homepage():
 
 @app.route('/c/<int:category_id>/<string:category_name>/')
 def category_page(category_id, category_name):
+    all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id = category_id).one()
     items = session.query(Item).filter_by(category_id = category_id)
-    return render_template('category.html', category = category, items = items)
+    return render_template('category.html', all_categories = all_categories, category = category, items = items)
 
 @app.route('/category/item/')
 def item_page():
