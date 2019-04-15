@@ -16,9 +16,11 @@ session = DBSession()
 def homepage():
     return render_template('index.html')
 
-@app.route('/category/')
-def category_page():
-    return render_template('category.html')
+@app.route('/c/<int:category_id>/<string:category_name>/')
+def category_page(category_id, category_name):
+    category = session.query(Category).filter_by(id = category_id).one()
+    items = session.query(Item).filter_by(category_id = category_id)
+    return render_template('category.html', category = category, items = items)
 
 @app.route('/category/item/')
 def item_page():
