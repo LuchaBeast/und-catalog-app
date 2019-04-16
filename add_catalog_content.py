@@ -99,9 +99,9 @@ item4 = Item(item_name="Pop! Marvel: Avengers: Endgame - Black Widow", item_desc
 session.add(item4)
 session.commit()
 
-item5 = Item(item_name="Pop! Marvel: Spider-Carnage Exclusive", item_description="Pop! figures bring your favorite characters to life with a unique stylized design. Each vinyl figure stands 3.75 inches tall and comes in window box packaging, making them great for display!", category=category2)
+item5 = Item(item_name="Pop! Marvel: Spider-Carnage Exclusive", item_description="Pop! figures bring your favorite characters to life with a unique stylized design. Each vinyl figure stands 3.75 inches tall and comes in window box packaging, making them great for display!", category=category3)
 
 session.add(item5)
 session.commit()
 
-print("added menu items!")
+print("added toy catalog items")
