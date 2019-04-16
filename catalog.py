@@ -15,7 +15,8 @@ session = DBSession()
 @app.route('/')
 def homepage():
     all_categories = session.query(Category).all()
-    return render_template('index.html', all_categories = all_categories)
+    all_items = session.query(Item).all()
+    return render_template('index.html', all_categories = all_categories, all_items = all_items)
 
 @app.route('/c/<int:category_id>/<string:category_name>/')
 def category_page(category_id, category_name):
