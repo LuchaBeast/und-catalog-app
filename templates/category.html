@@ -30,7 +30,12 @@
                 <div class="row align-items-center">
                     {% for item in row %}
                         <div class="col-sm">
-                            <h4>{{ item.item_name }}</h4>
+                                <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ item.item_name }}</h5>
+                                            <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
+                                        </div>
+                                    </div>
                         </div>
                     {% endfor %}
                 </div>
