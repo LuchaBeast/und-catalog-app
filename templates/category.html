@@ -26,16 +26,14 @@
 
         <div class="container">
             
-            {% for i in items %}
-                {% if loop.index == 1 %}
+            {% for row in items|batch(3,'') %}
                 <div class="row align-items-center">
-                {% endif %}
-                    <div class="col-sm">
-                        <h2>{{ i.item_name }}</h2>
-                    </div>
-                {% if loop.index % 3 == 0 %}
+                    {% for item in row %}
+                        <div class="col-sm">
+                            <h2>{{ item.item_name }}</h2>
+                        </div>
+                    {% endfor %}
                 </div>
-                {% endif %}
             {% endfor %}
         </div>
         
