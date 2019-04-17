@@ -27,9 +27,10 @@ def category_page(category_id, category_name):
 
 @app.route('/c/<int:category_id>/<string:category_name>/<int:id>/<string:item_name>/')
 def item_page(category_id, category_name, id, item_name):
+    all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id = category_id).one()
     item = session.query(Item).filter_by(category_id = category_id).filter_by(id = id).one()
-    return render_template('item.html', category = category, item = item)
+    return render_template('item.html', all_categories = all_categories, category = category, item = item)
     
 if __name__ == '__main__':
     app.debug = True
