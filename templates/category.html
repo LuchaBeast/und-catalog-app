@@ -36,7 +36,7 @@
                                 <h5 class="card-header">{{ item.item_name }}</h5>
                                 <div class="card-body">
                                     <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
-                                    <a href="#" class="btn btn-primary">View Item</a>
+                                    <a href="http://localhost:5000/c/{{ item.category_id }}/{{ category.category_name|replace(" ","-") }}/{{ item.item_name|replace(" ","-") }}/" class="btn btn-primary">View Item</a>
                                 </div>
                             </div>  
                         </div>
