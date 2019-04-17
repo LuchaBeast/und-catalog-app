@@ -24,20 +24,23 @@
             </div>
         </nav>
 
+        <div class="jumbotron">
+            <h1>Welcome to the Toy Catalog</h1>
+            <p>Please navigate to specific categories using the links above or choose an individual item from the selection below below.</p>
+        </div>
+
         <div class="container">
-            <div class="row">
-                <h1>Welcome to my Toy Catalog</h1>
-                <p>Please navigate to specific categories using the links above or choose an individual item from the selection below below.</p>
-            </div>
+            
             <div class="row">
                 {% for row in all_items|batch(3,'') %}
                 <div class="row align-items-center">
                     {% for item in row %}
                         <div class="col-sm">
                             <div class="card">
+                                <h5 class="card-header">{{ item.item_name }}</h5>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ item.item_name }}</h5>
                                     <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
+                                    <a href="#" class="btn btn-primary">Go somewhere</a>
                                 </div>
                             </div>
                             

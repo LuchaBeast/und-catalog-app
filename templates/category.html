@@ -23,19 +23,22 @@
                 </ul>
             </div>
         </nav>
-
+        <div class="jumbotron">
+            <h1>{{ category.category_name }}</h1>
+        </div>
         <div class="container">
             
             {% for row in items|batch(3,'') %}
                 <div class="row align-items-center">
                     {% for item in row %}
                         <div class="col-sm">
-                                <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ item.item_name }}</h5>
-                                            <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
-                                        </div>
-                                    </div>
+                            <div class="card">
+                                <h5 class="card-header">{{ item.item_name }}</h5>
+                                <div class="card-body">
+                                    <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
+                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>  
                         </div>
                     {% endfor %}
                 </div>
