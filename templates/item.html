@@ -27,8 +27,25 @@
             <h1>{{ item.item_name }}</h1>
         </div>
         <div class="container">
-            
-            
+            <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent">
+                        <li class="breadcrumb-item"><a href="http://localhost:5000">Home</a></li>
+                        <li class="breadcrumb-item"><a href="http://localhost:5000/c/{{ category.id }}/{{ category.category_name|replace(" ","-") }}/">{{ category.category_name }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ item.item_name }}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="row">
+                <div class="card">
+                    <div class="card-header">
+                        Item Description
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ item.item_description }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
