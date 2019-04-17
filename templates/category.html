@@ -27,7 +27,15 @@
             <h1>{{ category.category_name }}</h1>
         </div>
         <div class="container">
-            
+            <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent">
+                        <li class="breadcrumb-item"><a href="http://localhost:5000">Home</a></li>
+                        
+                        <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
+                    </ol>
+                </nav>
+            </div>
             {% for row in items|batch(3,'') %}
                 <div class="row align-items-center">
                     {% for item in row %}
