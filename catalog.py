@@ -25,7 +25,7 @@ def homepage():
 # Create category route
 # Define variables necessary for populating category page
 @app.route('/c/<int:category_id>/<string:category_name>/')
-def category_page(category_id, category_name):
+def categoryPage(category_id, category_name):
     all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id)
@@ -34,10 +34,16 @@ def category_page(category_id, category_name):
                            category=category,
                            items=items)
 
+# Create new item route
+@app.route('/c/<int:category_id>/<string:category_name>/new-item/')
+def newItemPage(category_id, category_name):
+    return "Add new item page"
 
+# Create item route
+# Define variables necessary to populate item page
 @app.route('/c/<int:category_id>/<string:category_name>/\
 <int:id>/<string:item_name>/')
-def item_page(category_id, category_name, id, item_name):
+def itemPage(category_id, category_name, id, item_name):
     all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
     item = (session.query(Item)
