@@ -39,15 +39,21 @@
             {% for row in items|batch(3,'') %}
                 <div class="row align-items-center">
                     {% for item in row %}
-                        <div class="col-sm">
-                            <div class="card">
-                                <h5 class="card-header">{{ item.item_name }}</h5>
-                                <div class="card-body">
-                                    <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
-                                    <a href="http://localhost:5000/c/{{ item.category_id }}/{{ category.category_name|replace(" ","-") }}/{{ item.id }}/{{ item.item_name|replace(" ","-") }}/" class="btn btn-primary">View Item</a>
-                                </div>
-                            </div>  
-                        </div>
+                        {# Test whether actual item from database or blank #}
+                        {% if item %}
+                            <div class="col-sm">
+                                <div class="card">
+                                    <h5 class="card-header">{{ item.item_name }}</h5>
+                                    <div class="card-body">
+                                        <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
+                                        <a href="http://localhost:5000/c/{{ item.category_id }}/{{ category.category_name|replace(" ","-") }}/{{ item.id }}/{{ item.item_name|replace(" ","-") }}/" class="btn btn-primary">View Item</a>
+                                    </div>
+                                </div>  
+                            </div>
+                        {# Create blank column if not actual item to keep even column spacing intact #}
+                        {% else %}
+                            <div class="col-sm"></div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             {% endfor %}
