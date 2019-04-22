@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
@@ -35,7 +34,8 @@ def categoryPage(category_id, category_name):
                            items=items)
 
 # Create new item route
-@app.route('/c/<int:category_id>/<string:category_name>/new-item/')
+@app.route('/c/<int:category_id>/<string:category_name>/new-item/',
+           methods=['GET', 'POST'])
 def newItemPage(category_id, category_name):
     return "Add new item page"
 
