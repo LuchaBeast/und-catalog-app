@@ -37,7 +37,11 @@ def categoryPage(category_id, category_name):
 @app.route('/c/<int:category_id>/<string:category_name>/new-item/',
            methods=['GET', 'POST'])
 def newItemPage(category_id, category_name):
-    return "Add new item page"
+    all_categories = session.query(Category).all()
+    category = session.query(Category).filter_by(id=category_id).one()
+    return render_template('new-item.html',
+                           all_categories=all_categories,
+                           category=category)
 
 # Create item route
 # Define variables necessary to populate item page
