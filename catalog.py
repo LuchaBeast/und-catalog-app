@@ -45,7 +45,7 @@ def newItem(category_id):
                        category_id=category_id)
         session.add(newItem)
         session.commit()
-        return redirect(url_for('categoryPage', category_id=category.id))
+        return redirect(url_for('category', category_id=category_id))
     else:
         return render_template('new-item.html',
                                all_categories=all_categories,
