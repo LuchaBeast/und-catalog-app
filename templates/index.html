@@ -30,30 +30,27 @@
         </div>
 
         <div class="container">
-            
-            <div class="row">
-                {% for row in all_items|batch(3,'') %}
-                <div class="row align-items-center">
-                    {% for item in row %}
-                        {# Test whether actual item from database or blank #}
-                        {% if item %}
-                            <div class="col-sm">
-                                <div class="card">
-                                    <h5 class="card-header">{{ item.item_name }}</h5>
-                                    <div class="card-body">
-                                        <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
-                                        <a href="{{ url_for('item', category_id=item.category_id, id=item.id)}}" class="btn btn-primary">View Item</a>
-                                    </div>
+            {% for row in all_items|batch(3,'') %}
+            <div class="row align-items-center">
+                {% for item in row %}
+                    {# Test whether actual item from database or blank #}
+                    {% if item %}
+                        <div class="col-sm">
+                            <div class="card">
+                                <h5 class="card-header">{{ item.item_name }}</h5>
+                                <div class="card-body">
+                                    <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
+                                    <a href="{{ url_for('item', category_id=item.category_id, id=item.id)}}" class="btn btn-primary">View Item</a>
                                 </div>
                             </div>
-                        {# Create blank column if not actual item to keep even column spacing intact #}
-                        {% else %}
-                            <div class="col-sm"></div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
+                        </div>
+                    {# Create blank column if not actual item to keep even column spacing intact #}
+                    {% else %}
+                        <div class="col-sm"></div>
+                    {% endif %}
                 {% endfor %}
             </div>
+            {% endfor %}
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
