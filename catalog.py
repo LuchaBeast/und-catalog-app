@@ -23,8 +23,8 @@ def homepage():
 
 # Create category route
 # Define variables necessary for populating category page
-@app.route('/c/<int:category_id>/<string:category_name>/')
-def categoryPage(category_id, category_name):
+@app.route('/cat/<int:category_id>/')
+def category(category_id):
     all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id)
@@ -34,20 +34,26 @@ def categoryPage(category_id, category_name):
                            items=items)
 
 # Create new item route
-@app.route('/c/<int:category_id>/<string:category_name>/new-item/',
-           methods=['GET', 'POST'])
-def newItemPage(category_id, category_name):
+@app.route('/cat/<int:category_id>/new-item/', methods=['GET', 'POST'])
+def newItem(category_id):
     all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
-    return render_template('new-item.html',
-                           all_categories=all_categories,
-                           category=category)
+    if request.method == 'POST':
+        newItem = Item(item_name=request.form['item_name'],
+                       item_description=request.form['item_description'],
+                       category_id=category_id)
+        session.add(newItem)
+        session.commit()
+        return redirect(url_for('categoryPage', category_id=category_id))
+    else:
+        return render_template('new-item.html',
+                               all_categories=all_categories,
+                               category=category)
 
 # Create item route
 # Define variables necessary to populate item page
-@app.route('/c/<int:category_id>/<string:category_name>/\
-<int:id>/<string:item_name>/')
-def itemPage(category_id, category_name, id, item_name):
+@app.route('/cat/<int:category_id>/i/<int:id>/')
+def item(category_id, id):
     all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
     item = (session.query(Item)

@@ -17,7 +17,7 @@
                 <ul class="navbar-nav">
                     {% for c in all_categories %}
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:5000/c/{{ c.id }}/{{ c.category_name|replace(" ","-") }}/">{{ c.category_name }}</a>
+                        <a class="nav-link" href="http://localhost:5000/cat/{{ c.id }}/">{{ c.category_name }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -42,7 +42,7 @@
                                     <h5 class="card-header">{{ item.item_name }}</h5>
                                     <div class="card-body">
                                         <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
-                                        <a href="http://localhost:5000/c/{{ item.category_id }}/{{ item.category.category_name|replace(" ","-") }}/{{ item.id }}/{{ item.item_name|replace(" ","-") }}/" class="btn btn-primary">View Item</a>
+                                        <a href="http://localhost:5000/cat/{{ item.category_id }}/i/{{ item.id }}/" class="btn btn-primary">View Item</a>
                                     </div>
                                 </div>
                             </div>

@@ -17,22 +17,22 @@
                 <ul class="navbar-nav">
                     {% for c in all_categories %}
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:5000/c/{{ c.id }}/{{ c.category_name|replace(" ","-") }}/">{{ c.category_name }}</a>
+                        <a class="nav-link" href="http://localhost:5000/cat/{{ c.id }}/">{{ c.category_name }}</a>
                     </li>
                     {% endfor %}
                 </ul>
             </div>
         </nav>
         <div class="jumbotron">
-            <h1>Add new item to catalog</h1>
+            <h1>Add new item to {{ category.category_name }} category</h1>
         </div>
         <div class="container">
             <div class="row">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent">
                         <li class="breadcrumb-item"><a href="http://localhost:5000">Home</a></li>
-                        <li class="breadcrumb-item"><a href="http://localhost:5000/c/{{ category.id }}/{{ category.category_name|replace(" ","-") }}/">{{ category.category_name }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Add new item to {{ category.category_name }}</li>
+                        <li class="breadcrumb-item"><a href="http://localhost:5000/cat/{{ category.id }}/">{{ category.category_name }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Add new item</li>
                     </ol>
                 </nav>
             </div>
@@ -41,13 +41,21 @@
                     <div class="form-group row">
                         <label for="formNewItemTitle" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="formNewItemTitle" placeholder="e.g. Spider-Man Vintage Action Figure">
+                            <input type="text" class="form-control" id="formNewItemTitle" name="item_name" placeholder="e.g. Spider-Man Vintage Action Figure">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="formNewItemDescription" class="col-sm-2 col-form-label">Description</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="formNewItemDescription" placeholder="Enter a description of the new item">
+                            <input type="text" class="form-control" id="formNewItemDescription" name="item_description" placeholder="Enter a description of the new item">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                           {# blank column to align the submit button with the textboxes #} 
+                        </div>
+                        <div class="col-sm-10">
+                            <input class="btn btn-primary" type="submit" value="Create">
                         </div>
                     </div>
                 </form>
