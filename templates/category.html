@@ -9,7 +9,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="http://localhost:5000">Toy Catalog</a>
+            <a class="navbar-brand" href="{{ url_for('homepage') }}">Toy Catalog</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -17,7 +17,7 @@
                 <ul class="navbar-nav">
                     {% for c in all_categories %}
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:5000/cat/{{ c.id }}/">{{ c.category_name }}</a>
+                        <a class="nav-link" href="{{ url_for('category', category_id=c.id) }}">{{ c.category_name }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -30,7 +30,7 @@
             <div class="row">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent">
-                        <li class="breadcrumb-item"><a href="http://localhost:5000">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url_for('homepage') }}">Home</a></li>
                         
                         <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
                     </ol>
@@ -46,7 +46,7 @@
                                     <h5 class="card-header">{{ item.item_name }}</h5>
                                     <div class="card-body">
                                         <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
-                                        <a href="http://localhost:5000/cat/{{ item.category_id }}/i/{{ item.id }}/" class="btn btn-primary">View Item</a>
+                                        <a href="{{ url_for('item', category_id=category.id, id=item.id)}}" class="btn btn-primary">View Item</a>
                                     </div>
                                 </div>  
                             </div>
