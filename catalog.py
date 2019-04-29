@@ -68,7 +68,7 @@ def item(category_id, id):
 
 
 # Create edit item route
-@app.route('/cat/<int:category_id>/i/<int:id>/edit-item/')
+@app.route('/cat/<int:category_id>/i/<int:id>/edit-item/', methods=['GET', 'POST'])
 def editItem(category_id, id):
     all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
@@ -76,10 +76,27 @@ def editItem(category_id, id):
             .filter_by(category_id=category_id)
             .filter_by(id=id)
             .one())
-    return render_template('edit-item.html',
-                           all_categories=all_categories,
-                           category=category,
-                           item=item)
+    itemToEdit = (session.query(Item)
+                  .filter_by(id=id)
+                  .one())
+    if request.method == 'POST':
+        item_name=request.form['item_name']
+        item_description=request.form['item_description']
+        if item_name != '' and item_description != '':
+            itemToEdit.item_name = item_name
+            itemToEdit.item_description = item_description
+        elif item_name != '' and item_description == '':
+            itemToEdit.item_name = item_name
+        elif item_name == '' and item_description != '':
+            itemToEdit.item_description = item_description
+        session.add(itemToEdit)
+        session.commit()
+        return redirect(url_for('item', category_id=category_id, id=id))
+    else:
+        return render_template('edit-item.html',
+                               all_categories=all_categories,
+                               category=category,
+                               item=item)
 
 
 if __name__ == '__main__':
