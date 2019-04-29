@@ -67,6 +67,21 @@ def item(category_id, id):
                            item=item)
 
 
+# Create edit item route
+@app.route('/cat/<int:category_id>/i/<int:id>/edit-item/')
+def editItem(category_id, id):
+    all_categories = session.query(Category).all()
+    category = session.query(Category).filter_by(id=category_id).one()
+    item = (session.query(Item)
+            .filter_by(category_id=category_id)
+            .filter_by(id=id)
+            .one())
+    return render_template('edit-item.html',
+                           all_categories=all_categories,
+                           category=category,
+                           item=item)
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
