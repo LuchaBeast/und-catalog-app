@@ -98,6 +98,20 @@ def editItem(category_id, id):
                                category=category,
                                item=item)
 
+# Create route for deleting item
+@app.route('/cat/<int:category_id>/i/<int:id>/delete-item/', methods=['GET', 'POST'])
+def deleteItem(category_id, id):
+    all_categories = session.query(Category).all()
+    category = session.query(Category).filter_by(id=category_id).one()
+    item = (session.query(Item)
+            .filter_by(category_id=category_id)
+            .filter_by(id=id)
+            .one())
+    return render_template('delete-item.html',
+                           all_categories=all_categories,
+                           category=category,
+                           item=item)
+
 
 if __name__ == '__main__':
     app.debug = True
