@@ -112,8 +112,10 @@ def deleteItem(category_id, id):
                     .filter_by(id=id)
                     .one())
     if request.method == 'POST':
+        item_name = itemToDelete.item_name
         session.delete(itemToDelete)
         session.commit()
+        flash("Toy has been deleted from the catalog")
         return redirect(url_for('category', category_id=category_id))
     else:
         return render_template('delete-item.html',
