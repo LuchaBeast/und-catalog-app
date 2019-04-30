@@ -27,6 +27,19 @@
             <h1>{{ category.category_name }}</h1>
         </div>
         <div class="container">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="row">
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Congratulations!</h4>
+                    <hr>
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endwith %}
             <div class="row">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent">

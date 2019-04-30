@@ -39,6 +39,14 @@
             
             <div class="row">
                 <p>Are you sure you want to delete <strong>{{ item.item_name }}</strong> from the catalog?</p>
+                <div class="col-sm-2">
+                    {# blank column to align the submit button with the textboxes #} 
+                </div>
+                <div class="col-sm-10">
+                    <form action="{{ url_for('deleteItem', category_id=category.id, id=item.id) }}" method="POST">
+                        <input class="btn btn-primary" type="submit" value="Yes">
+                    </form>
+                </div>
             </div>
             
         </div>

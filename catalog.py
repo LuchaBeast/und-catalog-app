@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -45,6 +45,7 @@ def newItem(category_id):
                        category_id=category_id)
         session.add(newItem)
         session.commit()
+        flash("Your new toy has been added to the catalog.")
         return redirect(url_for('category', category_id=category_id))
     else:
         return render_template('new-item.html',
@@ -107,12 +108,21 @@ def deleteItem(category_id, id):
             .filter_by(category_id=category_id)
             .filter_by(id=id)
             .one())
-    return render_template('delete-item.html',
-                           all_categories=all_categories,
-                           category=category,
-                           item=item)
+    itemToDelete = (session.query(Item)
+                    .filter_by(id=id)
+                    .one())
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        return redirect(url_for('category', category_id=category_id))
+    else:
+        return render_template('delete-item.html',
+                               all_categories=all_categories,
+                               category=category,
+                               item=item)
 
 
 if __name__ == '__main__':
+    app.secret_key = 'my_secret_key'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
