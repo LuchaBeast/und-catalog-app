@@ -86,10 +86,13 @@ def editItem(category_id, id):
         if item_name != '' and item_description != '':
             itemToEdit.item_name = item_name
             itemToEdit.item_description = item_description
+            flash("Item name and description have been updated to reflect your changes.")
         elif item_name != '' and item_description == '':
             itemToEdit.item_name = item_name
+            flash("Item name has been updated to reflect your changes.")
         elif item_name == '' and item_description != '':
             itemToEdit.item_description = item_description
+            flash("Item description has been updated to reflect your changes.")
         session.add(itemToEdit)
         session.commit()
         return redirect(url_for('item', category_id=category_id, id=id))
@@ -112,7 +115,6 @@ def deleteItem(category_id, id):
                     .filter_by(id=id)
                     .one())
     if request.method == 'POST':
-        item_name = itemToDelete.item_name
         session.delete(itemToDelete)
         session.commit()
         flash("Toy has been deleted from the catalog")
