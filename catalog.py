@@ -22,6 +22,11 @@ def homepage():
                            all_categories=all_categories,
                            all_items=all_items)
 
+# Create json route for all categories and items
+@app.route('/json/')
+def jsonRoute():
+    return "Placeholder for json"
+
 # Create category route
 # Define variables necessary for populating category page
 @app.route('/cat/<int:category_id>/')
