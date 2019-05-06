@@ -24,8 +24,9 @@ def homepage():
 
 # Create json route for all categories and items
 @app.route('/cat/<int:category_id>/json/')
-def categoryJSON():
-    return "Placeholder for json"
+def categoryJSON(category_id):
+    items = session.query(Item).filter_by(category_id=category_id)
+    return jsonify(CategoryItems=[i.serialize for i in items])
 
 # Create category route
 # Define variables necessary for populating category page
