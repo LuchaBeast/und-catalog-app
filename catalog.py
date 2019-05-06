@@ -1,4 +1,5 @@
-from flask import Flask, redirect, render_template, request, url_for, flash, jsonify
+from flask import Flask, redirect, render_template, request, url_for, flash, \
+    jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -22,7 +23,7 @@ def homepage():
                            all_categories=all_categories,
                            all_items=all_items)
 
-# Create json route for all categories and items
+# Create json route for categories
 @app.route('/cat/<int:category_id>/json/')
 def categoryJSON(category_id):
     items = session.query(Item).filter_by(category_id=category_id)
@@ -58,6 +59,15 @@ def newItem(category_id):
                                all_categories=all_categories,
                                category=category)
 
+# Create json route for individual items
+@app.route('/cat/<int:category_id>/i/<int:id>/json/')
+def itemJSON(category_id, id):
+    item = (session.query(Item)
+            .filter_by(category_id=category_id)
+            .filter_by(id=id)
+            .one())
+    return jsonify(Item=item.serialize)
+
 # Create item route
 # Define variables necessary to populate item page
 @app.route('/cat/<int:category_id>/i/<int:id>/')
@@ -75,7 +85,8 @@ def item(category_id, id):
 
 
 # Create edit item route
-@app.route('/cat/<int:category_id>/i/<int:id>/edit-item/', methods=['GET', 'POST'])
+@app.route('/cat/<int:category_id>/i/<int:id>/edit-item/',
+           methods=['GET', 'POST'])
 def editItem(category_id, id):
     all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
@@ -87,12 +98,13 @@ def editItem(category_id, id):
                   .filter_by(id=id)
                   .one())
     if request.method == 'POST':
-        item_name=request.form['item_name']
-        item_description=request.form['item_description']
+        item_name = request.form['item_name']
+        item_description = request.form['item_description']
         if item_name != '' and item_description != '':
             itemToEdit.item_name = item_name
             itemToEdit.item_description = item_description
-            flash("Item name and description have been updated to reflect your changes.")
+            flash("Item name and description have been \
+                   updated to reflect your changes.")
         elif item_name != '' and item_description == '':
             itemToEdit.item_name = item_name
             flash("Item name has been updated to reflect your changes.")
@@ -109,7 +121,8 @@ def editItem(category_id, id):
                                item=item)
 
 # Create route for deleting item
-@app.route('/cat/<int:category_id>/i/<int:id>/delete-item/', methods=['GET', 'POST'])
+@app.route('/cat/<int:category_id>/i/<int:id>/delete-item/',
+           methods=['GET', 'POST'])
 def deleteItem(category_id, id):
     all_categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
