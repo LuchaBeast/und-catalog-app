@@ -1,79 +1,42 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <title>{{ category.category_name }}</title>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ url_for('homepage') }}">Toy Catalog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    {% for c in all_categories %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('category', category_id=c.id) }}">{{ c.category_name }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </nav>
-        <div class="jumbotron">
-            <h1>{{ category.category_name }}</h1>
-        </div>
-        <div class="container">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <div class="row">
-                <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading">Congratulations!</h4>
-                    <hr>
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-            {% endwith %}
-            <div class="row">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent">
-                        <li class="breadcrumb-item"><a href="{{ url_for('homepage') }}">Home</a></li>
-                        
-                        <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
-                    </ol>
-                </nav>
-            </div>
-            {% for row in items|batch(3,'') %}
-                <div class="row d-flex align-items-stretch">
-                    {% for item in row %}
-                        {# Test whether actual item from database or blank #}
-                        {% if item %}
-                            <div class="col-sm py-2">
-                                <div class="card h-100">
-                                    <h5 class="card-header">{{ item.item_name }}</h5>
-                                    <div class="card-body d-flex flex-column">
-                                        <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
-                                        <a href="{{ url_for('item', category_id=category.id, id=item.id)}}" class="btn btn-primary mt-auto w-50">View Item</a>
-                                    </div>
-                                </div>  
+{% extends 'base.html' %}
+
+{% block title %}{{ category.category_name }}{% endblock %}
+{% block jumbotron %}
+<h1>{{ category.category_name }}</h1>
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent">
+            <li class="breadcrumb-item"><a href="{{ url_for('homepage') }}">Home</a></li>
+            
+            <li class="breadcrumb-item active" aria-current="page">{{ category.category_name }}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+    {% for row in items|batch(3,'') %}
+        <div class="row d-flex align-items-stretch">
+            {% for item in row %}
+                {# Test whether actual item from database or blank #}
+                {% if item %}
+                    <div class="col-sm py-2">
+                        <div class="card h-100">
+                            <h5 class="card-header">{{ item.item_name }}</h5>
+                            <div class="card-body d-flex flex-column">
+                                <p class="card-text">{{ item.item_description|truncate(100,True) }}</p>
+                                <a href="{{ url_for('item', category_id=category.id, id=item.id)}}" class="btn btn-primary mt-auto w-50">View Item</a>
                             </div>
-                        {# Create blank column if not actual item to keep even column spacing intact #}
-                        {% else %}
-                            <div class="col-sm"></div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
+                        </div>  
+                    </div>
+                {# Create blank column if not actual item to keep even column spacing intact #}
+                {% else %}
+                    <div class="col-sm"></div>
+                {% endif %}
             {% endfor %}
         </div>
-        
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
-</html>
+    {% endfor %}
+{% endblock %}
