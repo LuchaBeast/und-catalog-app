@@ -23,8 +23,8 @@ def homepage():
                            all_items=all_items)
 
 # Create json route for all categories and items
-@app.route('/json/')
-def jsonRoute():
+@app.route('/cat/<int:category_id>/json/')
+def categoryJSON():
     return "Placeholder for json"
 
 # Create category route
