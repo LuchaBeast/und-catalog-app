@@ -1,9 +1,12 @@
 from flask import Flask, redirect, render_template, request, url_for, flash, \
     jsonify
+from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from database_setup import Base, Category, Item
+import random
+import string
 
 app = Flask(__name__)
 
@@ -22,6 +25,12 @@ def homepage():
     return render_template('index.html',
                            all_categories=all_categories,
                            all_items=all_items)
+
+@app.route('/login/')
+def showLogin():
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(32))
+    login_session['state'] = state
+    return "The current session state is %s" % login_session['state']
 
 # Create json route for categories
 @app.route('/cat/<int:category_id>/json/')

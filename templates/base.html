@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>{% block title%}{% endblock %}</title>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content=" 370815085190-m1vq60h7haplrtu8q4tqp5ssj6o52q5h.apps.googleusercontent.com ">
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,7 +24,9 @@
                     {% endfor %}
                 </ul>
             </div>
-            <button type="button" class="btn btn-link float-right">Sign In</button>
+            {# <button type="button" class="btn btn-link float-right">Sign In</button> #}
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
         </nav>
 
         <div class="jumbotron">
