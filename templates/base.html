@@ -24,8 +24,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            {# <button type="button" class="btn btn-link float-right">Sign In</button> #}
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <button type="button" class="btn btn-link float-right"><a href="{{ url_for('showLogin') }}">Sign In</a></button>
 
         </nav>
 

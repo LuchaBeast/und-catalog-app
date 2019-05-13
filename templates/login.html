@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign in - Toy Catalog App{% endblock %}
+{% block jumbotron %}
+    <h1>Sign In</h1>
+    <p>Please login with your Google account to access more functionality.</p>
+{% endblock %}
+
+{% block content %}
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+{% endblock %}
