@@ -1,12 +1,14 @@
 from flask import Flask, redirect, render_template, request, url_for, flash, \
-    jsonify
+    jsonify, make_response
 from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from database_setup import Base, Category, Item
-import random
-import string
+
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import FlowExchangeError
+import random, string, httplib2, json, requests
 
 app = Flask(__name__)
 
@@ -34,7 +36,8 @@ def showLogin():
     login_session['state'] = state
     return render_template('login.html',
                            route=route,
-                           all_categories=all_categories)
+                           all_categories=all_categories,
+                           STATE=state)
 
 # Create json route for categories
 @app.route('/cat/<int:category_id>/json/')

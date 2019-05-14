@@ -68,13 +68,44 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         {% if route=='login' %}
-        <script>function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-          }</script>
+        <script>
+            function signInCallback(authResult) {
+              if (authResult['code']) {
+            
+                // Hide the sign-in button now that the user is authorized, for example:
+                $('#signinButton').attr('style', 'display: none');
+            
+                // Send the code to the server
+                $.ajax({
+                  type: 'POST',
+                  url: '/googleconnect?state={{STATE}}',
+                  // Always include an `X-Requested-With` header in every AJAX request,
+                  // to protect against CSRF attacks.
+                  headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                  },
+                  contentType: 'application/octet-stream; charset=utf-8',
+                  success: function(result) {
+                    // Handle or verify the server response.
+                    if (result) {
+                        $('#result').html('Login successful</br>' + result + '</br>Redirecting now...')
+                        setTimeout(function() {
+                            window.location.href = "/";
+                        }, 4000);
+                    } else if (authResult['error']) {
+                        console.log('There was an error: ' + authResult['error']);
+                    }
+                  },
+                  processData: false,
+                  data: authResult['code']
+                });
+              } else {
+                // There was an error.
+                $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+              }
+            }
+        </script>
+            
         {% endif %}
           
     </body>
