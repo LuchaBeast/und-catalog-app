@@ -12,6 +12,8 @@ import random, string, httplib2, json, requests
 
 app = Flask(__name__)
 
+CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
+
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.bind = engine
 
